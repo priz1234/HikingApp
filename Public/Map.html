@@ -1,0 +1,428 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Leaflet Web Map</title>
+
+    <!-- reference to Leaflet CSS -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+    <!-- reference to Leaflet JavaScript -->
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+    <!-- set width and height styles for map -->
+    <style>
+        #map {
+            width: 100%;
+            height: 900px;
+            position: relative;
+        }
+
+        .leaflet-popup-content {
+            width: 300px !important;
+        }
+
+        .legend {
+            position: absolute;
+            top: 75px;
+            right: 50px;
+            z-index: 100000;
+            height: 220px;
+            width: 125px;
+            color: white;
+            font: bold 16px Helvetica, Sans-Serif;
+            letter-spacing: -1px;
+            background: rgb(0, 0, 0); /* fallback color */
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+        }
+
+            .legend span {
+                color: white;
+                font: bold 16px Helvetica, Sans-Serif;
+                letter-spacing: -1px;
+                background: rgb(0, 0, 0); /* fallback color */
+                background: rgba(0, 0, 0, 0.7);
+                padding: 10px;
+            }
+
+        .rotate180 {
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+
+
+        .rotate90 {
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- place holder for map -->
+    <div id="map">
+        <div class="legend">
+            <img src='iconGreen.png' alt='Smiley face' width='26' height='26'>Easy Hike
+            <br>
+            <img src='iconYellow.png' alt='Smiley face' width='26' height='26'>Moderate Hike
+            <br>
+            <img src='iconRed.png' alt='Smiley face' width='26' height='26'>Difficult Hike
+            <br>
+            <img src='iconBlue.png' alt='Smiley face' width='26' height='26'>Canyon
+            <br>
+            <img src='iconPurple.png' alt='Smiley face' width='26' height='26'>Roadside
+            <br>
+            <img src='iconNavy.png' alt='Smiley face' width='26' height='26'>Climbing
+            <br>
+            <img src='iconOrange.png' alt='Smiley face' width='26' height='26'>Other
+            <br>
+
+        </div>
+
+        <script>
+
+    //  create map object, tell it to live in 'map' div and give initial latitude, longitude, zoom values
+    var map = L.map('map', {scrollWheelZoom:true}).setView([39.336922, -110.743077], 5);
+
+    //  add base map tiles from OpenStreetMap and attribution info to 'map' div
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // create custom icon
+    var easy = L.icon({
+        iconUrl: 'iconGreen.png',
+        iconSize: [26, 26], // size of the icon
+        });
+		var canyon = L.icon({
+        iconUrl: 'iconBlue.png',
+        iconSize: [26, 26], // size of the icon
+        });
+		var roadside = L.icon({
+        iconUrl: 'iconPurple.png',
+        iconSize: [26, 26], // size of the icon
+        });
+		var hard = L.icon({
+        iconUrl: 'iconRed.png',
+        iconSize: [26, 26], // size of the icon
+        });
+		var climbing = L.icon({
+        iconUrl: 'iconNavy.png',
+        iconSize: [26, 26], // size of the icon
+        });
+		var other = L.icon({
+        iconUrl: 'iconOrange.png',
+        iconSize: [26, 26], // size of the icon
+        });
+		var moderate = L.icon({
+        iconUrl: 'iconYellow.png',
+        iconSize: [26, 26], // size of the icon
+        });
+
+    // create marker object, pass custom icon as option, add to map
+var p3 = L.marker([38.315467,-111.304104],{icon: moderate}).addTo(map).bindPopup("Spring Canyon to Cohab Canyon <br> Miles: 17<br><img src='popupImages/SpringCohab.jpg' alt='Smiley face' width='300'>");
+var p4 = L.marker([41.015087,-111.893968],{icon: hard}).addTo(map).bindPopup("Wolverine Ridge <br> Miles 4.5 <br> Elevation Gain: 2526ft<br><img src='popupImages/WolverineRidge.jpg' class='rotate180' alt='Smiley face' width='300'>");
+var p5 = L.marker([40.966057,-111.872639],{icon: easy}).addTo(map).bindPopup("Davis Creek <br> Miles: 2.57 <br> Elevation Gain: 1194ft<br><img src='popupImages/davisCreek.jpg' class='rotate180' alt='Smiley face' width='300'>");
+var p6 = L.marker([38.901007,-110.441179],{icon: hard}).addTo(map).bindPopup("Tiptop Arch <br> Miles: 3.8 <br> Elevation Gain: 1804ft<br><img src='popupImages/SpringCohab.jpg' alt='Smiley face' width='300'>");
+var p7 = L.marker([38.881774,-110.446197],{icon: hard}).addTo(map).bindPopup("Mystery Bridge Attempt #1 <br> Miles: 2.29 <br> Elevation Gain: 965ft<br><img src='popupImages/SpringCohab.jpg' alt='Smiley face' width='300'>");
+var p8 = L.marker([38.881757,-110.446157],{icon: hard}).addTo(map).bindPopup("Mystery Bridge Attempt #2 <br> Miles: 5.94 <br> Elevation Gain: 2063ft");
+var p9 = L.marker([38.881757,-110.446157],{icon: easy}).addTo(map).bindPopup("Spirit Arch and Petroglyph Canyon <br> Miles: 2.14 <br> Elevation Gain: 370ft");
+var p10 = L.marker([41.211023,-111.931889],{icon: moderate}).addTo(map).bindPopup("Malans Peak <br> Miles: 5.5 <br> Elevation Gain: 2316ft<br><img src='popupImages/malanPeak.jpg' alt='Smiley face' width='300'>");
+var p11 = L.marker([41.218581,-111.862705],{icon: moderate}).addTo(map).bindPopup("Sardine Peak <br> Miles: 5 <br> Elevation Gain: 1623ft<br><img src='popupImages/sardinePeak.jpg' alt='Smiley face' width='300'>");
+var p12 = L.marker([37.161774,-113.512982],{icon: easy}).addTo(map).bindPopup("Elephant Arch <br> Miles: 3.84 <br> Elevation Gain: 380ft<br><img src='popupImages/elephantArch.jpg' alt='Smiley face' width='300'>");
+var p13 = L.marker([37.340134, -113.113406],{icon: moderate}).addTo(map).bindPopup("Kolob Arch <br> Miles: 17.03 <br> Elevation Gain: 2015ft<br><img src='popupImages/KolobArch.jpg' alt='Smiley face' width='300'>");
+var p14 = L.marker([37.234584, -113.476888],{icon: easy}).addTo(map).bindPopup("Yant Flats <br> Miles: 3.4 <br> Elevation Gain: 337ft<br><img src='popupImages/yant.jpg' alt='Smiley face' width='300'>");
+var p15 = L.marker([37.280396, -113.737301],{icon: easy}).addTo(map).bindPopup("The Vortex <br> Miles: 2.2 <br> Elevation Gain: 492ft<br><img src='popupImages/vortex.jpg' alt='Smiley face' width='300'>");
+var p16 = L.marker([37.018898, -112.025252],{icon: easy}).addTo(map).bindPopup("The Wave <br> Miles: 6.2 <br> Elevation Gain: 1167ft<br><img src='popupImages/wave.jpg' alt='Smiley face' width='300'>");
+var p17 = L.marker([37.209797, -113.335576],{icon: easy}).addTo(map).bindPopup("Babylon Arch <br> Miles: 2.9 <br> Elevation Gain: 452ft<br><img src='popupImages/babylon.jpg' alt='Smiley face' width='300'>");
+var p18 = L.marker([40.916698,-111.864066],{icon: easy}).addTo(map).bindPopup("Centerville Canyon <br> Miles: 5 <br> Elevation Gain: 1443ft<br><img src='popupImages/centervilleCanyon.jpg' alt='Smiley face' width='300'>");
+var p19 = L.marker([40.3119, -105.645352],{icon: easy}).addTo(map).bindPopup("Emerald Lake <br> Miles: 3.66 <br> Elevation Gain: 591ft<br><img src='popupImages/emeraldLake.jpg' alt='Smiley face' width='300'>");
+var p20 = L.marker([40.308071, -105.643442],{icon: moderate}).addTo(map).bindPopup("Mills Lake to Sky Pond to Bear Lake <br> Miles: 11<br><img src='popupImages/lakeOfGlass.jpg' alt='Smiley face' width='300'>");
+var p21 = L.marker([40.354975, -105.631186],{icon: moderate}).addTo(map).bindPopup("Bear Lake to Fern Trailhead <br> Miles: 11<br><img src='popupImages/odessaLake.jpg' alt='Smiley face' width='300'>");
+var p22 = L.marker([40.320637, -105.623279],{icon: easy}).addTo(map).bindPopup("Bierstadt Lake to Sprague Lake <br> Miles: 8.41 <br> Elevation Gain: 962ft<br><img src='popupImages/bierstadtLake.jpg' alt='Smiley face' width='300'>");
+var p23 = L.marker([40.570678, -111.701343],{icon: hard}).addTo(map).bindPopup("Red Pine Lake <br> Miles: 10.77 <br> Elevation Gain: 2931ft<br><img src='popupImages/redPine.jpg' alt='Smiley face' width='300'>");
+var p24 = L.marker([37.226182, -112.885860],{icon: canyon}).addTo(map).bindPopup("Fat Man's Misery<br><img src='popupImages/fatMan.jpg' alt='Smiley face' width='300'>");
+var p25 = L.marker([40.692458,  -111.670145],{icon: hard}).addTo(map).bindPopup("Gobblers Knob <br> Miles: 7.52 <br> Elevation Gain: 3511ft<br><img src='popupImages/gobbler.jpg' alt='Smiley face' width='300'>");
+var p26 = L.marker([40.722957,  -110.863826],{icon: hard}).addTo(map).bindPopup("Hayden's Peak <br> Miles: 2.27 <br> Elevation Gain: 2032ft<br><img src='popupImages/hayden.jpg' alt='Smiley face' width='300'>");
+var p27 = L.marker([40.82255,  -110.800810],{icon: hard}).addTo(map).bindPopup("Ostler's Peak and Amethyst Lake <br> Miles: 14.85 <br> Elevation Gain: 2912ft<br><img src='popupImages/ostler.jpg' alt='Smiley face' width='300'>");
+var p28 = L.marker([32.203238,  -110.725169],{icon: roadside}).addTo(map).bindPopup("Saguaro National Park <br> Desert Ecology Trail<br><img src='popupImages/saguaro2.jpg' alt='Smiley face' width='300'>");
+var p29 = L.marker([32.276692,  -111.197545],{icon: easy}).addTo(map).bindPopup("Saguaro National Park <br> Valley Overlook Trail<br><img src='popupImages/saguaro.jpg' alt='Smiley face' width='300'>");
+var p30 = L.marker([37.383044,   -113.506834],{icon: hard}).addTo(map).bindPopup("Forsyth Canyon <br> Miles: 7.27 <br> Elevation Gain: 2054ft<br><img src='popupImages/forsyth.jpg' alt='Smiley face' width='300'>");
+var p31 = L.marker([29.268426,   -103.302770],{icon: moderate}).addTo(map).bindPopup("South Rim Trail <br> Miles: 13.68 <br> Elevation Gain: 2923ft<br><img src='popupImages/southRim.jpg' alt='Smiley face' width='300'>");
+var p32 = L.marker([29.274473, -103.286436],{icon: moderate}).addTo(map).bindPopup("Lost Mine <br> Miles: 4.9 <br> Elevation Gain: 1082ft<br><img src='popupImages/lostMine.jpg' alt='Smiley face' width='300'>");
+var p33 = L.marker([29.418766,  -103.138178],{icon: roadside}).addTo(map).bindPopup("Dinosour Fossils<br><img src='popupImages/dino.jpg' alt='Smiley face' width='300'>");
+var p34 = L.marker([29.167877,  -103.610487],{icon: easy}).addTo(map).bindPopup("Santa Elena Canyon <br> Miles: 1<br><img src='popupImages/elena.jpg' alt='Smiley face' width='300'>");
+var p35 = L.marker([29.15418,  -103.579768],{icon: easy}).addTo(map).bindPopup("Dorgan House Trail <br> Miles: 0.5<br><img src='popupImages/dorgan.jpg' alt='Smiley face' width='300'>");
+var p36 = L.marker([29.279266,  -103.368686],{icon: roadside}).addTo(map).bindPopup("Sam Nail Ranch <br> Miles: 0.5<br><img src='popupImages/nail.jpg' alt='Smiley face' width='300'>");
+var p37 = L.marker([31.896559, -104.828125],{icon: hard}).addTo(map).bindPopup("Guadalupe Peak <br> Miles: 8.72 <br> Elevation Gain: 3102ft<br><img src='popupImages/guadalupe.jpg' alt='Smiley face' width='300'>");
+var p38 = L.marker([32.176528,  -104.443600],{icon: other}).addTo(map).bindPopup("Carlsbad Caverns<br><img src='popupImages/carlsbad.jpg' alt='Smiley face' width='300'>");
+var p39 = L.marker([43.655937, -110.781264],{icon: moderate}).addTo(map).bindPopup("Death Canyon <br> Miles: 7.97 <br> Elevation Gain: 2351ft<br><img src='popupImages/deathCanyon.jpg' alt='Smiley face' width='300'>");
+var p40 = L.marker([43.734758, -110.741435],{icon: hard}).addTo(map).bindPopup("Amphitheater Lake and Garnet Canyon <br> Miles: 14 <br> Elevation Gain: 4020ft<br><img src='popupImages/amphitheaterLake.jpg' alt='Smiley face' width='300'>");
+var p41 = L.marker([43.784867, -110.727548],{icon: hard}).addTo(map).bindPopup("Lake Solitude and Paintbrush Divide <br> Miles: 19.83 <br> Elevation Gain: 4115ft<br><img src='popupImages/paintbrush.jpg' alt='Smiley face' width='300'>");
+var p42 = L.marker([40.966864, -111.873070],{icon: easy}).addTo(map).bindPopup("Hornet Canyon <br> Miles: 2.63 <br> Elevation Gain: 685ft<br><img src='popupImages/grotto.jpg' alt='Smiley face' width='300'>");
+var p43 = L.marker([48.678484, -113.595483],{icon: easy}).addTo(map).bindPopup("Baring Falls <br> Miles: 0.75 <br> Elevation Gain: 250ft<br><img src='popupImages/baring.jpg' alt='Smiley face' width='300'>");
+var p44 = L.marker([48.805488, -113.633827],{icon: easy}).addTo(map).bindPopup("Apikuni Falls <br> Miles: 1.8 <br> Elevation Gain: 621ft<br><img src='popupImages/apikuni.jpg' alt='Smiley face' width='300'>");
+var p45 = L.marker([48.795876, -113.656051],{icon: easy}).addTo(map).bindPopup("Cracker Lake <br> Miles: 12.13 <br> Elevation Gain: 1984ft<br><img src='popupImages/cracker.jpg' alt='Smiley face' width='300'>");
+var p46 = L.marker([48.701524, -113.667502],{icon: moderate}).addTo(map).bindPopup("Siyeh Pass <br> Miles: 14.25 <br> Elevation Gain: 3041ft<br><img src='popupImages/siyeh.jpg' alt='Smiley face' width='300'>");
+var p47 = L.marker([48.695836, -113.717668],{icon: easy}).addTo(map).bindPopup("Hidden Lake <br> Miles: 2.8 <br> Elevation Gain: 580ft<br><img src='popupImages/hiddenLake.jpg' alt='Smiley face' width='300'>");
+var p48 = L.marker([48.797213, -113.668497],{icon: moderate}).addTo(map).bindPopup("Grinnel Glacier <br> Miles: 11.41 <br> Elevation Gain: 2115ft<br><img src='popupImages/grinnel.jpg' alt='Smiley face' width='300'>");
+var p49 = L.marker([48.797564,-113.678385],{icon: moderate}).addTo(map).bindPopup("Iceberg Lake <br> Miles: 10.31 <br> Elevation Gain: 1585ft<br><img src='popupImages/iceberg.jpg' alt='Smiley face' width='300'>");
+var p50 = L.marker([48.696805, -113.718203],{icon: hard}).addTo(map).bindPopup("Highline Trail and Swiftcurrent Peak <br> Miles: 16 <br> Elevation Gain: 3022ft<br><img src='popupImages/highline.jpg' alt='Smiley face' width='300'>");
+var p51 = L.marker([48.676767, -113.814671],{icon: easy}).addTo(map).bindPopup("Avalanche Lake <br> Miles: 4.8 <br> Elevation Gain: 803ft<br><img src='popupImages/avalanche.jpg' alt='Smiley face' width='300'>");
+var p52 = L.marker([48.634867, -113.863611],{icon: easy}).addTo(map).bindPopup("McDonald Creek <br> Miles: 1<br><img src='popupImages/mcdonald.jpg' alt='Smiley face' width='300'>");
+var p53 = L.marker([48.67431, -113.609281],{icon: easy}).addTo(map).bindPopup("St. Mary's and Victoria Falls <br> Miles: 3.98 <br> Elevation Gain: 721ft<br><img src='popupImages/victoriaFalls.jpg' alt='Smiley face' width='300'>");
+var p54 = L.marker([40.92501, -110.406912],{icon: hard}).addTo(map).bindPopup("Red Castle <br> Miles: 23.4 <br> Elevation Gain: 1846ft<br><img src='popupImages/redCastle.jpg' alt='Smiley face' width='300'>");
+var p55 = L.marker([38.379929, -112.401838],{icon: easy}).addTo(map).bindPopup("Mud Lake to Big John's Flat <br> Miles: 6.12 <br> Elevation Gain: 780ft<br><img src='popupImages/mudLake.jpg' alt='Smiley face' width='300'>");
+var p56 = L.marker([38.366429, -112.396066],{icon: moderate}).addTo(map).bindPopup("Delano Peak <br> Miles: 4.19 <br> Elevation Gain: 1885ft<br><img src='popupImages/delano.jpg' alt='Smiley face' width='300'>");
+var p57 = L.marker([40.681049, -110.964882],{icon: easy}).addTo(map).bindPopup("Marjorie Lake <br> Miles: 6 <br> Elevation Gain: 600ft<br><img src='popupImages/marjorie.jpg' alt='Smiley face' width='300'>");
+var p58 = L.marker([40.682871, -110.966266],{icon: easy}).addTo(map).bindPopup("Crystal Lake Loop <br> Miles: 6.1 <br> Elevation Gain: 460ft<br><img src='popupImages/crystal.jpg' alt='Smiley face' width='300'>");
+var p59 = L.marker([38.186134, -109.974719],{icon: moderate}).addTo(map).bindPopup("Harvest Scene <br> Miles: 10.56 <br> Elevation Gain: 1624ft<br><img src='popupImages/harvest.jpg' alt='Smiley face' width='300'>");
+var p60 = L.marker([34.969481, -108.002607],{icon: easy}).addTo(map).bindPopup("Lava Tubes (El Malpais National Monument<br><img src='popupImages/elMalpais.jpg' alt='Smiley face' width='300'>");
+var p61 = L.marker([38.158755, -109.946138],{icon: easy}).addTo(map).bindPopup("The Doll House <br> Miles: 2.42 <br> Elevation Gain: 512ft<br><img src='popupImages/dollHouse.jpg' alt='Smiley face' width='300'>");
+var p62 = L.marker([37.221721, -112.915596],{icon: hard}).addTo(map).bindPopup("Many Pools to Cable Mountain <br> Miles: 10.26 <br> Elevation Gain: 2936ft<br><img src='popupImages/cable.jpg' alt='Smiley face' width='300'>");
+var p63 = L.marker([40.697497, -111.739996],{icon: moderate}).addTo(map).bindPopup("Thaynes Canyon <br> Miles: 4 <br> Elevation Gain: 2037ft<br><img src='popupImages/thaynes.jpg' alt='Smiley face' width='300'>");
+var p64 = L.marker([37.650124, -112.148688],{icon: easy}).addTo(map).bindPopup("Fairyland Loop <br> Miles: 8.1 <br> Elevation Gain: 1623ft<br><img src='popupImages/fairyland.jpg' alt='Smiley face' width='300'>");
+var p65 = L.marker([37.623616, -112.168000],{icon: easy}).addTo(map).bindPopup("Navajo Trail?<br><img src='popupImages/navajo.jpg' alt='Smiley face' width='300'>");
+var p66 = L.marker([37.483086, -112.096746],{icon: easy}).addTo(map).bindPopup("Willis Creek<br><img src='popupImages/willis.jpg' alt='Smiley face' width='300'>");
+var p67 = L.marker([37.472117, -112.110503],{icon: canyon}).addTo(map).bindPopup("Bull Valley Gorge<br><img src='popupImages/bull.jpg' alt='Smiley face' width='300'>");
+var p68 = L.marker([37.522787, -111.991903],{icon: easy}).addTo(map).bindPopup("Grand Parade Trail (Kodachrome Basin)<br><img src='popupImages/kodachrome.jpg' alt='Smiley face' width='300'>");
+var p69 = L.marker([38.98855, -110.393720],{icon: moderate}).addTo(map).bindPopup("Cave Canyon and Arch Tower Canyon <br> Miles: 8.52 <br> Elevation Gain: 1794ft<br><img src='popupImages/caveCanyon.jpg' alt='Smiley face' width='300'>");
+var p70 = L.marker([39.079243, -110.430699],{icon: moderate}).addTo(map).bindPopup("Cottonwood Canyon Loop <br> Miles: 12.39 <br> Elevation Gain: 1652ft<br><img src='popupImages/cottonwoodCanyon.jpg' alt='Smiley face' width='300'>");
+var p71 = L.marker([41.226682, -111.930566],{icon: moderate}).addTo(map).bindPopup("Hidden Valley <br> Miles: 2.51 <br> Elevation Gain: 1021ft<br><img src='popupImages/hiddenValley.jpg' alt='Smiley face' width='300'>");
+var p72 = L.marker([38.426125, -109.925530],{icon: easy}).addTo(map).bindPopup("Upheaval Dome <br> Miles: 1.38 <br> Elevation Gain: 215ft<br><img src='popupImages/upheaval.jpg' alt='Smiley face' width='300'>");
+var p73 = L.marker([38.389165, -109.868685],{icon: easy}).addTo(map).bindPopup("Mesa Arch <br> Miles: 0.62 <br> Elevation Gain: 50ft<br><img src='popupImages/mesaArch.jpg' alt='Smiley face' width='300'>");
+var p74 = L.marker([38.322431, -109.849845],{icon: easy}).addTo(map).bindPopup("White Rim Overlook <br> Miles: 1.8 <br> Elevation Gain: 160ft<br><img src='popupImages/whiteRim.jpg' alt='Smiley face' width='300'>");
+var p75 = L.marker([38.31092, -109.857023],{icon: easy}).addTo(map).bindPopup("Grand View Point <br> Miles: 1.8 <br> Elevation Gain: 173ft<br><img src='popupImages/grandView.jpg' alt='Smiley face' width='300'>");
+var p76 = L.marker([38.782727, -109.595076],{icon: easy}).addTo(map).bindPopup("Devil's Garden <br> Miles: 8.81 <br> Elevation Gain: 895ft<br><img src='popupImages/devilsGarden.jpg' alt='Smiley face' width='300'>");
+var p77 = L.marker([38.735448, -109.520783],{icon: easy}).addTo(map).bindPopup("Delicate Arch <br> Miles: 3.34 <br> Elevation Gain: 610ft<br><img src='popupImages/delicateArch.jpg' alt='Smiley face' width='300'>");
+var p78 = L.marker([38.68691, -109.537315],{icon: easy}).addTo(map).bindPopup("The Windows <br> Miles: 0.4<br><img src='popupImages/windows.jpg' alt='Smiley face' width='300'>");
+var p79 = L.marker([38.624324, -109.600122],{icon: easy}).addTo(map).bindPopup("Park Avenue <br> Miles: 1.5 <br> Elevation Gain: 250ft<br><img src='popupImages/parkAvenue.jpg' alt='Smiley face' width='300'>");
+var p80 = L.marker([38.643106, -110.745444],{icon: moderate}).addTo(map).bindPopup("Crack and Chute Canyon <br> Miles: 11.2 <br> Elevation Gain: 1321ft<br><img src='popupImages/crackChute.jpg' alt='Smiley face' width='300'>");
+var p81 = L.marker([38.85746, -110.867857],{icon: canyon}).addTo(map).bindPopup("Lupacchiotta Canyon<br><img src='popupImages/lupac.jpg' alt='Smiley face' width='300'>");
+var p82 = L.marker([41.225649, -111.930107],{icon: easy}).addTo(map).bindPopup("Indian Trail <br> Miles: 2.91 <br> Elevation Gain: 812ft<br><img src='popupImages/indianTrail.jpg' alt='Smiley face' width='300'>");
+var p83 = L.marker([41.066115, -111.909814],{icon: easy}).addTo(map).bindPopup("Adams Canyon <br> Miles: 3.3 <br> Elevation Gain: 1214ft<br><img src='popupImages/adamsCanyon.jpg' alt='Smiley face' width='300'>");
+var p84 = L.marker([41.000492, -111.866070],{icon: easy}).addTo(map).bindPopup("Farmington Canyon <br> Miles: 5.01 <br> Elevation Gain: 1419ft<br><img src='popupImages/farmingtonCreek.jpg' alt='Smiley face' width='300'>");
+var p85 = L.marker([40.571934, -111.796335],{icon: easy}).addTo(map).bindPopup("Bell Canyon <br> Miles: 4.94 <br> Elevation Gain: 1521ft<br><img src='popupImages/bellCanyon.jpg' alt='Smiley face' width='300'>");
+var p86 = L.marker([37.278628, -113.654004],{icon: easy}).addTo(map).bindPopup("Red Mountain and Snow Canyon Overlook <br> Miles: 10.45 <br> Elevation Gain: 821ft<br><img src='popupImages/snowCanyonOverlook.jpg' alt='Smiley face' width='300'>");
+var p87 = L.marker([37.181201, -113.623628],{icon: easy}).addTo(map).bindPopup("Snow Canyon Petroglyphs<br><img src='popupImages/snowCanyonP.jpg' alt='Smiley face' width='300'>");
+var p88 = L.marker([37.221953, -113.642332],{icon: easy}).addTo(map).bindPopup("Lava Tubes <br> Miles: 1.6 <br> Elevation Gain: 184ft<br><img src='popupImages/lavaTube.jpg' alt='Smiley face' width='300'>");
+var p89 = L.marker([37.385148, -112.838452],{icon: moderate}).addTo(map).bindPopup("The Narrows Top Down <br> Miles: 16 <br><img src='popupImages/narrowsT.jpg' alt='Smiley face' width='300'>");
+var p90 = L.marker([37.309896, -112.857042],{icon: canyon}).addTo(map).bindPopup("Birch Hollow<br><img src='popupImages/birch.jpg' alt='Smiley face' width='300'>");
+var p91 = L.marker([37.302856, -112.888245],{icon: canyon}).addTo(map).bindPopup("Englestead Hollow<br><img src='popupImages/englestead.jpg' alt='Smiley face' width='300'>");
+var p92 = L.marker([40.7001, -110.883468],{icon: moderate}).addTo(map).bindPopup("Duchesne River Trail Loop <br> Miles: 17.12 <br> Elevation Gain: 2010ft<br><img src='popupImages/duchesne.jpg' alt='Smiley face' width='300'>");
+var p93 = L.marker([40.881594, -111.844403],{icon: easy}).addTo(map).bindPopup("Holbrook Canyon <br> Miles: 4.7 <br> Elevation Gain: 1234ft<br><img src='popupImages/farmingtonCreek.jpg' alt='Smiley face' width='300'>");
+var p94 = L.marker([38.921557, -120.068018],{icon: hard}).addTo(map).bindPopup("Mount Tallac <br> Miles: 10 <br> Elevation Gain: 3154ft<br><img src='popupImages/tallac.jpg' alt='Smiley face' width='300'>");
+var p95 = L.marker([39.279176, -120.125633],{icon: easy}).addTo(map).bindPopup("Lookout Mountain<br><img src='popupImages/lookout.jpg' alt='Smiley face' width='300'>");
+var p96 = L.marker([40.909094, -110.330940],{icon: hard}).addTo(map).bindPopup("Kings Peak <br> Miles: 28 <br> Elevation Gain: 5118ft<br><img src='popupImages/kings.jpg' alt='Smiley face' width='300'>");
+var p97 = L.marker([37.271015, -112.938358],{icon: canyon}).addTo(map).bindPopup("Mystery Canyon<br><img src='popupImages/mystery.jpg' alt='Smiley face' width='300'>");
+var p98 = L.marker([37.234816, -112.877170],{icon: moderate}).addTo(map).bindPopup("East Rim<br><img src='popupImages/eastRim.jpg' alt='Smiley face' width='300'>");
+var p99 = L.marker([36.066316, -116.748802],{icon: easy}).addTo(map).bindPopup("Sidewinder Canyon <br> Miles: 2.92<br><img src='popupImages/sidewinder.jpg' alt='Smiley face' width='300'>");
+var p100 = L.marker([35.919534, -116.682778],{icon: roadside}).addTo(map).bindPopup("Ashford Mills Ruins<br><img src='popupImages/ashford.jpg' alt='Smiley face' width='300'>");
+var p101 = L.marker([36.229908, -116.767808],{icon: roadside}).addTo(map).bindPopup("Badwater Basin<br><img src='popupImages/badwater.jpg' alt='Smiley face' width='300'>");
+var p102 = L.marker([36.281023, -116.770069],{icon: easy}).addTo(map).bindPopup("Natural Bridge Trail <br> Miles: 1.67<br><img src='popupImages/naturalBridge.jpg' alt='Smiley face' width='300'>");
+var p103 = L.marker([36.395943, -116.839026],{icon: easy}).addTo(map).bindPopup("Desolation Canyon <br> Miles: 2.94<br><img src='popupImages/desolation.jpg' alt='Smiley face' width='300'>");
+var p104 = L.marker([36.606025, -117.115285],{icon: easy}).addTo(map).bindPopup("Mesquite Flat Sand Dunes <br> Miles: 1.39<br><img src='popupImages/mesquiteSand.jpg' alt='Smiley face' width='300'>");
+var p105 = L.marker([36.571996, -117.144528],{icon: easy}).addTo(map).bindPopup("Mosaic Canyon <br> Miles: 2.76<br><img src='popupImages/mosaic.jpg' alt='Smiley face' width='300'>");
+var p106 = L.marker([40.332269, -111.525904],{icon: easy}).addTo(map).bindPopup("Big Springs <br> Miles: 2.76<br><img src='popupImages/bigSpring1.jpg' alt='Smiley face' width='300'>");
+var p107 = L.marker([40.331778, -111.523337],{icon: easy}).addTo(map).bindPopup("Big Springs South <br> Miles: 1.39<br><img src='popupImages/bigSpring2.jpg' alt='Smiley face' width='300'>");
+var p108 = L.marker([40.533114, -111.490618],{icon: easy}).addTo(map).bindPopup("Wasatch Mountain State Park Snowshoe <br> Miles: 1.59<br><img src='popupImages/wasatchMountain.jpg' alt='Smiley face' width='300'>");
+var p109 = L.marker([37.572521, -111.257670],{icon: canyon}).addTo(map).bindPopup("Egypt 1");
+var p110 = L.marker([37.581139, -111.242918],{icon: canyon}).addTo(map).bindPopup("Egypt 2");
+var p111 = L.marker([37.589885, -111.230785],{icon: canyon}).addTo(map).bindPopup("Egypt 3");
+var p112 = L.marker([36.486255, -114.532976],{icon: easy}).addTo(map).bindPopup("White Domes <br> Miles: 0.45");
+var p113 = L.marker([36.440912, -114.516596],{icon: easy}).addTo(map).bindPopup("Fire Canyon");
+var p114 = L.marker([37.224913, -113.407479],{icon: easy}).addTo(map).bindPopup("Red Cliffs");
+var p115 = L.marker([37.233965, -113.400716],{icon: canyon}).addTo(map).bindPopup("Pigeon Poop Canyon");
+var p116 = L.marker([37.392294, -113.000440],{icon: canyon}).addTo(map).bindPopup("Boundary Canyon");
+var p117 = L.marker([22.87695, -109.896215],{icon: other}).addTo(map).bindPopup("Cabo San Lucas");
+var p118 = L.marker([23.196534, -106.426535],{icon: other}).addTo(map).bindPopup("Mazatlan");
+var p119 = L.marker([20.480886, -105.267317],{icon: other}).addTo(map).bindPopup("Vallarta Adventure Zipline");
+var p120 = L.marker([20.690392, -105.294989],{icon: other}).addTo(map).bindPopup("Puerto Vallarta");
+var p121 = L.marker([37.275495, -112.966508],{icon: canyon}).addTo(map).bindPopup("Behunin Canyon");
+var p122 = L.marker([37.264383, -112.950466],{icon: moderate}).addTo(map).bindPopup("Angels Landing");
+var p123 = L.marker([37.267632, -112.937771],{icon: easy}).addTo(map).bindPopup("Hidden Canyon");
+var p124 = L.marker([37.254296, -112.957378],{icon: easy}).addTo(map).bindPopup("Emerald Pools");
+var p125 = L.marker([37.285129, -112.948014],{icon: easy}).addTo(map).bindPopup("The Narrows Bottom");
+var p126 = L.marker([37.213515, -112.944893],{icon: easy}).addTo(map).bindPopup("Canyon Overlook");
+var p127 = L.marker([37.210985, -112.942553],{icon: canyon}).addTo(map).bindPopup("Pine Creek");
+var p128 = L.marker([37.224546, -112.953643],{icon: canyon}).addTo(map).bindPopup("Spry Canyon");
+var p129 = L.marker([37.226619, -112.901568],{icon: canyon}).addTo(map).bindPopup("Keyhole Canyon");
+var p130 = L.marker([36.904249, -113.810532],{icon: canyon}).addTo(map).bindPopup("Golf Canyon");
+var p131 = L.marker([37.53599, -113.164022],{icon: easy}).addTo(map).bindPopup("Kanarraville Falls");
+var p132 = L.marker([37.546682, -113.141215],{icon: canyon}).addTo(map).bindPopup("Kanarraville Falls Top Down");
+var p133 = L.marker([37.502586, -113.155009],{icon: canyon}).addTo(map).bindPopup("Spring Creek");
+var p134 = L.marker([28.735007, -81.480200],{icon: other}).addTo(map).bindPopup("Wekiwa Springs State Park");
+var p135 = L.marker([40.863379, -111.836775],{icon: easy}).addTo(map).bindPopup("Mueller Park");
+var p136 = L.marker([-23.857951, 31.570526],{icon: other}).addTo(map).bindPopup("Kruger National Park");
+var p137 = L.marker([-24.458564, 28.829470],{icon: other}).addTo(map).bindPopup("South Africa Hunting");
+var p138 = L.marker([-23.89235, 29.953468],{icon: roadside}).addTo(map).bindPopup("Cheerio Gardens");
+var p139 = L.marker([38.185729, -111.179237],{icon: easy}).addTo(map).bindPopup("Capitol Reef Field Station Hike");
+var p140 = L.marker([38.288829, -111.228161],{icon: easy}).addTo(map).bindPopup("Hickman Bridge");
+var p141 = L.marker([38.298511, -111.259196],{icon: moderate}).addTo(map).bindPopup("Navajo Knobs");
+var p142 = L.marker([38.261079, -111.225490],{icon: canyon}).addTo(map).bindPopup("Cassidy Arch Canyon");
+var p143 = L.marker([38.282449, -111.246881],{icon: easy}).addTo(map).bindPopup("Cohab Canyon");
+var p144 = L.marker([38.303518, -111.303486],{icon: easy}).addTo(map).bindPopup("Sulpher Creek");
+var p145 = L.marker([40.490402, -111.694581],{icon: hard}).addTo(map).bindPopup("Box Elder Peak");
+var p146 = L.marker([40.244684, -111.627445],{icon: easy}).addTo(map).bindPopup("The Y");
+var p147 = L.marker([40.254912, -111.608924],{icon: moderate}).addTo(map).bindPopup("Y Mountain");
+var p148 = L.marker([40.271488, -111.616838],{icon: moderate}).addTo(map).bindPopup("Sqaw Peak");
+var p149 = L.marker([40.375272, -111.710430],{icon: easy}).addTo(map).bindPopup("Grove Creek");
+var p150 = L.marker([40.388038, -111.603826],{icon: easy}).addTo(map).bindPopup("Stewart Falls");
+var p151 = L.marker([40.404567, -111.605979],{icon: easy}).addTo(map).bindPopup("Aspen Grove Snowshoe");
+var p152 = L.marker([37.375097, -113.455718],{icon: hard}).addTo(map).bindPopup("Whipple Valley to Browns Point");
+var p153 = L.marker([37.316938, -113.453214],{icon: hard}).addTo(map).bindPopup("Signal Peak");
+var p154 = L.marker([37.236225, -113.453008],{icon: canyon}).addTo(map).bindPopup("Yankee Doodle");
+var p155 = L.marker([37.25017, -113.429540],{icon: canyon}).addTo(map).bindPopup("Boltergeist Canyon");
+var p156 = L.marker([37.020917, -111.963512],{icon: easy}).addTo(map).bindPopup("Buckskin Gulch");
+var p157 = L.marker([39.336922, -110.743077],{icon: climbing}).addTo(map).bindPopup("Triassic Bouldering");
+var p158 = L.marker([34.939157, -109.756659],{icon: easy}).addTo(map).bindPopup("Blue Mesa Trail");
+var p159 = L.marker([34.975589, -109.794504],{icon: roadside}).addTo(map).bindPopup("Puerco Pueblo Trail");
+var p160 = L.marker([34.864079, -109.791124],{icon: easy}).addTo(map).bindPopup("Crystal Forest");
+var p161 = L.marker([34.806152, -109.861446],{icon: easy}).addTo(map).bindPopup("Agate House");
+var p162 = L.marker([34.815425, -109.866538],{icon: easy}).addTo(map).bindPopup("Giant Logs Trail");
+var p163 = L.marker([37.797298, -111.413231],{icon: easy}).addTo(map).bindPopup("Lower Calf Creek Falls");
+var p164 = L.marker([37.857534, -111.445271],{icon: easy}).addTo(map).bindPopup("Upper Calf Creek Falls");
+var p165 = L.marker([37.48057, -111.216484],{icon: easy}).addTo(map).bindPopup("Peek-a-Boo and Spooky Canyon");
+var p166 = L.marker([38.564103, -110.703715],{icon: easy}).addTo(map).bindPopup("Goblin Valley State Park");
+var p167 = L.marker([38.567509, -110.701133],{icon: easy}).addTo(map).bindPopup("Carmel Canyon");
+var p168 = L.marker([38.586269, -110.805119],{icon: easy}).addTo(map).bindPopup("Little Wild Horse and Bell Canyon");
+var p169 = L.marker([36.452016, -118.564640],{icon: hard}).addTo(map).bindPopup("Monarch Lakes and Sawtooth Pass");
+var p170 = L.marker([36.584068, -118.751681],{icon: roadside}).addTo(map).bindPopup("General Sherman Tree");
+var p171 = L.marker([36.565679, -118.768985],{icon: easy}).addTo(map).bindPopup("Big Trees Trail and Congress Trail");
+var p172 = L.marker([36.606376, -118.723362],{icon: easy}).addTo(map).bindPopup("Tokopah Falls");
+var p173 = L.marker([36.746704, -118.973301],{icon: roadside}).addTo(map).bindPopup("General Grant Tree");
+var p174 = L.marker([36.781457, -118.623207],{icon: roadside}).addTo(map).bindPopup("Roaring River Falls");
+var p175 = L.marker([36.79354, -118.598372],{icon: easy}).addTo(map).bindPopup("Zumwalt Meadows");
+var p176 = L.marker([41.939804, -111.382633],{icon: other}).addTo(map).bindPopup("Bear Lake");
+var p177 = L.marker([41.026031, -112.238771],{icon: easy}).addTo(map).bindPopup("Elephant Head and Mormon Rocks Loop <br> Miles: 17");
+var p178 = L.marker([40.994034, -112.202699],{icon: moderate}).addTo(map).bindPopup("Frary Peak");
+var p179 = L.marker([37.171362, -113.715706],{icon: climbing}).addTo(map).bindPopup("Shotgun Alley Climbing");
+var p180 = L.marker([37.161024, -113.612494],{icon: climbing}).addTo(map).bindPopup("Cougar Cliffs Climbing");
+var p181 = L.marker([36.98323, -113.502997],{icon: roadside}).addTo(map).bindPopup("Little Black Mountain Petroglyphs");
+var p182 = L.marker([37.214545,  -112.930668],{icon: easy}).addTo(map).bindPopup("Upper Pine Creek");
+var p183 = L.marker([41.03569, -111.884094],{icon: hard}).addTo(map).bindPopup("Bair Canyon <br> Miles: 8 <br> Elevation Gain: 4000ft");
+var p184 = L.marker([36.420013,  -116.812444],{icon: roadside}).addTo(map).bindPopup("Zabriske Point");
+var p185 = L.marker([36.421989,  -116.848508],{icon: easy}).addTo(map).bindPopup("Golden Canyon<br><img src='popupImages/golden.jpg' alt='Smiley face' width='300'>");
+var p186 = L.marker([36.220891,  -116.726493],{icon: roadside}).addTo(map).bindPopup("Dante's View");
+var p187 = L.marker([37.171709,  -113.082977],{icon: easy}).addTo(map).bindPopup("Coalpits Wash");
+var p188 = L.marker([37.454552, -111.832505],{icon: easy}).addTo(map).bindPopup("Grosvenor Arch");
+var p189 = L.marker([29.275061, -103.305755],{icon: easy}).addTo(map).bindPopup("Window View Trail");
+var p190 = L.marker([37.31218, -113.048811],{icon: canyon}).addTo(map).bindPopup("Full Left Fork (Subway)");
+var p191 = L.marker([37.088613, -113.635772],{icon: climbing}).addTo(map).bindPopup("Green Valley Gap Climbing");
+var p192 = L.marker([-43.99974, 170.465388],{icon: other}).addTo(map).bindPopup("Lake Tekapo");
+var p193 = L.marker([-43.718288, 170.094022],{icon: easy}).addTo(map).bindPopup("Hooker Valley Track <br> Miles: 7.5");
+var p194 = L.marker([-43.696633, 170.166805],{icon: easy}).addTo(map).bindPopup("Tasman Glacier Overlook <br> Miles: 1");
+var p195 = L.marker([-44.653912, 167.902344],{icon: other}).addTo(map).bindPopup("Milford Sound");
+var p196 = L.marker([-44.72165, 167.948855],{icon: roadside}).addTo(map).bindPopup("The Chasm <br> Miles: 0.25");
+var p197 = L.marker([-45.028522, 168.010812],{icon: roadside}).addTo(map).bindPopup("Mirror Lakes");
+var p198 = L.marker([-44.078153, 169.385778],{icon: roadside}).addTo(map).bindPopup("Fantail Falls");
+var p199 = L.marker([-44.03695, 169.366644],{icon: roadside}).addTo(map).bindPopup("Thunder Creek Falls");
+var p200 = L.marker([-43.714065, 169.225207],{icon: roadside}).addTo(map).bindPopup("Knights Point Lookout");
+var p201 = L.marker([-43.467213, 170.017261],{icon: easy}).addTo(map).bindPopup("Minnehaha Glow Worm Walk <br> Miles: 0.5");
+var p202 = L.marker([-43.230327, 171.715662],{icon: easy}).addTo(map).bindPopup("Castle Hill Limestone");
+var p203 = L.marker([-42.933013, 171.566167],{icon: easy}).addTo(map).bindPopup("Devils Punchbowl Falls <br> Miles: 1.6 <br> Elevation Gain: 350ft");
+var p204 = L.marker([-42.940636, 171.560617],{icon: roadside}).addTo(map).bindPopup("Avalanche Creek Waterfall");
+var p205 = L.marker([-45.439879, 167.684753],{icon: hard}).addTo(map).bindPopup("Kepler Track <br> Miles: 35.36 <br> Elevation Gain: 6700ft");
+var p206 = L.marker([-44.78847, 168.078944],{icon: moderate}).addTo(map).bindPopup("Lake Marian <br> Miles: 4.2 <br> Elevation Gain: 1650ft");
+var p207 = L.marker([-44.825366, 168.117370],{icon: easy}).addTo(map).bindPopup("Key Summit <br> Miles: 4.8 <br> Elevation Gain: 1520ft");
+var p208 = L.marker([-45.006112, 168.616867],{icon: hard}).addTo(map).bindPopup("Ben Lomond <br> Miles: 9.86 <br> Elevation Gain: 4731ft");
+var p209 = L.marker([-44.674122, 169.071801],{icon: hard}).addTo(map).bindPopup("Roy's Peak <br> Miles: 10.15 <br> Elevation Gain: 4111ft");
+var p210 = L.marker([-44.509432, 168.741070],{icon: moderate}).addTo(map).bindPopup("Rob Roy Glacier <br> Miles: 7.42 <br> Elevation Gain: 2178ft");
+var p211 = L.marker([-43.412166, 170.176557],{icon: moderate}).addTo(map).bindPopup("Alex Knob <br> Miles: 10.70 <br> Elevation Gain: 3743ft");
+var p212 = L.marker([37.155441, -113.503229],{icon: easy}).addTo(map).bindPopup("Dino Cliffs");
+var p213 = L.marker([40.906962, -111.920718],{icon: roadside}).addTo(map).bindPopup("Bountiful Lake");
+var p213 = L.marker([40.957228, -111.929450],{icon: roadside}).addTo(map).bindPopup("Farmington Bay");
+var p215 = L.marker([37.216103, -113.606526],{icon: easy}).addTo(map).bindPopup("Indian Cave Petroglyphs");
+var p216 = L.marker([37.424915, -110.993480],{icon: moderate}).addTo(map).bindPopup("Coyote Gulch <br> Miles: 16");
+var p217 = L.marker([37.197487, -113.442434],{icon: easy}).addTo(map).bindPopup("Cottonwood Wash <br> Miles: 5");
+var p218 = L.marker([37.238394, -113.643519],{icon: easy}).addTo(map).bindPopup("White Rock Amphitheater <br> Miles: 1.5");
+var p219 = L.marker([37.324622, -113.059580],{icon: hard}).addTo(map).bindPopup("West Northgate Peak <br> Miles: 8.19 <br> Elevation Gain: 1378ft");
+var p220 = L.marker([37.187748, -118.620417],{icon: hard}).addTo(map).bindPopup("Sabrina Basin <br> Miles: 15");
+var p221 = L.marker([37.146934, -118.576856],{icon: moderate}).addTo(map).bindPopup("Treasure and Chocolate Lakes <br> Miles: 11.1 <br> Elevation Gain: 2359ft");
+var p222 = L.marker([37.126082, -118.490303],{icon: hard}).addTo(map).bindPopup("Big Pine Lakes <br> Miles: 16.5 <br> Elevation Gain: 3976ft");
+var p223 = L.marker([37.180981, -118.580060],{icon: moderate}).addTo(map).bindPopup("Tyee Lakes <br> Miles: 5.8 <br> Elevation Gain: 1906ft");
+var p224 = L.marker([37.319447, -113.034385],{icon: canyon}).addTo(map).bindPopup("Das Boot and Subway");
+var p225 = L.marker([37.128412, -113.297351],{icon: moderate}).addTo(map).bindPopup("Mollies Nipple <br> Miles: 1.7 <br> Elevation Gain: 1207ft");
+var p226 = L.marker([37.319070, -113.494728],{icon: hard}).addTo(map).bindPopup("Burger and Signal Peak <br> Miles: 13.7 <br> Elevation Gain: 4900ft");
+var p227 = L.marker([36.105360, -112.094798],{icon: hard}).addTo(map).bindPopup("Grand Canyon Rim to Rim <br> Miles: 23 <br> Elevation Gain: 5186ft");
+var p228 = L.marker([36.104867, -112.087469],{icon: moderate}).addTo(map).bindPopup("Clear Creek <br> Miles: 3");
+var p229 = L.marker([37.635838, -112.918378],{icon: moderate}).addTo(map).bindPopup("Ashdown Gorge <br> Miles: 9");
+var p230 = L.marker([40.688617, -110.968621],{icon: climbing}).addTo(map).bindPopup("Cliff Lake");
+var p231 = L.marker([42.657309, -111.596670],{icon: other}).addTo(map).bindPopup("Soda Springs");
+var p232 = L.marker([38.561856, -109.516593],{icon: easy}).addTo(map).bindPopup("Mill Creek");
+var p233 = L.marker([43.846600, -110.574350],{icon: roadside}).addTo(map).bindPopup("Jackson Lake Overlook");
+var p234 = L.marker([37.157617, -113.705318],{icon: easy}).addTo(map).bindPopup("Anasazi Petroglyphs <br> Miles: 3");
+var p236 = L.marker([37.086021, -111.702358],{icon: easy}).addTo(map).bindPopup("Birthday Arch");
+var p236 = L.marker([37.190220, -113.441996],{icon: easy}).addTo(map).bindPopup("Cottonwood Hills Loop");
+var p238 = L.marker([37.073944, -113.039108],{icon: hard}).addTo(map).bindPopup("Canaan Mountain and White Domes");
+var p239 = L.marker([37.462110, -113.183682],{icon: easy}).addTo(map).bindPopup("Middle Fork Taylor Creek");
+var p240 = L.marker([37.221627, -112.930955],{icon: easy}).addTo(map).bindPopup("Progeny Peak");
+var p241 = L.marker([37.180736, -113.400667],{icon: easy}).addTo(map).bindPopup("Quail Lake Overlook");
+var p242 = L.marker([37.211641, -113.678814],{icon: moderate}).addTo(map).bindPopup("Red Mountain Traverse");
+var p243 = L.marker([37.117560, -113.487866],{icon: easy}).addTo(map).bindPopup("Shinob Kibe");
+var p244 = L.marker([36.712867, -112.466396],{icon: moderate}).addTo(map).bindPopup("Snake Gulch");
+var p245 = L.marker([37.108362, -111.870342],{icon: easy}).addTo(map).bindPopup("Toadstool Hoodoos");
+var p246 = L.marker([40.748674, -110.304507],{icon: hard}).addTo(map).bindPopup("Uinta Basin Loop <br> Miles: 47");
+var p247 = L.marker([37.160579, -111.711466],{icon: moderate}).addTo(map).bindPopup("Wahweap Hoodoos");
+var p248 = L.marker([37.222173, -112.899430],{icon: easy}).addTo(map).bindPopup("Upper Pine Creek");
+var p249 = L.marker([37.196868, -113.467960],{icon: moderate}).addTo(map).bindPopup("Peak 4416");
+var p250 = L.marker([37.167932, -113.628849],{icon: easy}).addTo(map).bindPopup("Scout Cave");
+var p251 = L.marker([36.426551, -114.540401],{icon: moderate}).addTo(map).bindPopup("Prospect Trail");
+var p252 = L.marker([37.177472, -113.531357],{icon: easy}).addTo(map).bindPopup("Mustang Pass");
+var p253 = L.marker([37.193072, -113.427042],{icon: easy}).addTo(map).bindPopup("Other Cottonwood Wash");
+var p254 = L.marker([37.187045, -113.433631],{icon: easy}).addTo(map).bindPopup("Cottonwood Hills Loop");
+var p255 = L.marker([37.677374, -111.451108],{icon: moderate}).addTo(map).bindPopup("Bighorn Canyon");
+var p256 = L.marker([37.756248, -111.410300],{icon: easy}).addTo(map).bindPopup("Phipps Arch");
+var p257 = L.marker([37.682971, -111.315745],{icon: moderate}).addTo(map).bindPopup("Cosmic Ashtray");
+var p258 = L.marker([37.526916, -109.628546],{icon: easy}).addTo(map).bindPopup("Ballroom Ruins");
+var p259 = L.marker([37.525080, -109.637884],{icon: easy}).addTo(map).bindPopup("Butler Wash Ruins");
+var p260 = L.marker([37.364314, -109.628411],{icon: easy}).addTo(map).bindPopup("Cold Spring Cave");
+var p261 = L.marker([37.316273, -109.628820],{icon: easy}).addTo(map).bindPopup("Double Stack Ruins");
+var p262 = L.marker([37.427785, -109.631674],{icon: easy}).addTo(map).bindPopup("Fish Mouth Cave");
+var p263 = L.marker([37.358644, -109.630588],{icon: easy}).addTo(map).bindPopup("Monarch Ruins");
+var p264 = L.marker([37.538719, -109.734916],{icon: moderate}).addTo(map).bindPopup("Mule Canyon");
+var p265 = L.marker([37.351116, -109.629071],{icon: easy}).addTo(map).bindPopup("Procession Panel");
+var p266 = L.marker([37.389850, -109.626185],{icon: easy}).addTo(map).bindPopup("Split Level Ruins");
+var p249 = L.marker([37.190079, -113.577651],{icon: easy}).addTo(map).bindPopup("Yellow Knolls and Black Gulch");
+
+
+
+
+
+
+var legend = L.control({position: 'bottomleft'});
+    legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend');
+    labels = ['<strong>Categories</strong>'],
+    categories = ['Road Surface','Signage','Line Markings','Roadside Hazards','Other'];
+
+    for (var i = 0; i < categories.length; i++) {
+
+            div.innerHTML +=
+            labels.push(
+                '<i class="circle" style="background:' + getColor(categories[i]) + '"></i> ' +
+            (categories[i] ? categories[i] : '+'));
+
+        }
+        div.innerHTML = labels.join('<br>');
+    return div;
+    };
+    legend.addTo(map);
+
+        </script>
+
+</body>
+
+</html>
